@@ -1,0 +1,256 @@
+import numpy as np
+import pandas as pd
+import datetime
+from datetime import datetime
+import plotly
+import plotly.express as px
+import plotly.graph_objects as go
+
+# Crear df de csv
+def load_mora_df(file):
+	df = pd.read_csv(file)
+
+	df['saldo_total'] = df['saldo_total'].where(df['pais'] == 'El Salvador', df['saldo_total'] / 25)
+	df['exigible_moneda'] = df['exigible_moneda'].where(df['pais'] == 'El Salvador', df['exigible_moneda'] / 25)
+
+	df['fecha_solicitud'] = pd.to_datetime(df['fecha_solicitud'])
+	df['fecha_ultimo_pago'] = pd.to_datetime(df['fecha_ultimo_pago'])
+	df['fecha_mora'] = pd.to_datetime(df['fecha_mora'])
+	df['fecha_proxima_cuota'] = pd.to_datetime(df['fecha_proxima_cuota'])
+
+	df['madurez'] = 'Mora ' + (df['cuotas_pendientes'] * 15).astype(str)
+
+	return df
+
+
+def load_df_t(file):
+	df_cashflow = pd.read_csv(file)
+	df_cashflow['impago'] = [1 if x == 'Vencido' else 0 for x in df_cashflow['estado']]
+	df_cashflow['pagado'] = df_cashflow['monto_cuota'].where(df_cashflow['impago'] == 0, 0)
+	df_cashflow['fecha_cuota'] = pd.to_datetime(df_cashflow['fecha_cuota'])
+	df_t = df_cashflow[['fecha_cuota', 'id_credito', 'impago', 'monto_cuota', 'pagado']].set_index('fecha_cuota')
+	df_t = df_t.resample('D').agg({'id_credito': 'count',
+								   'impago': 'sum',
+								   'monto_cuota': 'sum',
+								   'pagado': 'sum'})
+
+	df_t['loss'] = df_t['monto_cuota'] - df_t['pagado']
+
+	df_t['tasa_imago'] = df_t['impago'].astype(int) / df_t['id_credito'].astype(int)
+	df_t['esperado_cumulativo'] = df_t['monto_cuota'].cumsum()
+	df_t['ganado_cumulativo'] = df_t['pagado'].cumsum()
+	df_t['perdida_cumulativo'] = df_t['loss'].cumsum()
+
+	df_t['goal'] = df_t['esperado_cumulativo'] * 0.75
+
+	today_date = datetime.today()
+	df_t = df_t[df_t.index < today_date]
+
+	return df_t
+
+
+# %%
+def ingresos_acumulados(df_t):
+	fig = go.Figure(layout=go.Layout(
+		title="Ingresos acumulados",
+		width=1000,
+		height=600,
+		template='simple_white'
+	))
+
+	fig.add_trace(go.Scatter(x=df_t.index,
+							 y=df_t.esperado_cumulativo,
+							 mode='lines',
+							 line=dict(width=0.5, color='coral'),
+							 fill='tozeroy',
+							 name='Ingreso esperado acumulado'))
+
+	fig.add_trace(go.Scatter(x=df_t.index,
+							 y=df_t.ganado_cumulativo,
+							 mode='lines',
+							 line=dict(width=0.5, color='green'),
+							 fill='tozeroy',
+							 name='Ingreso real acumulado'))
+
+	fig.add_trace(go.Scatter(x=df_t.index, y=df_t.goal, mode='lines', line=dict(width=1.5, color='black', dash='dash'),
+							 name='Meta 75%'))
+
+	return fig
+
+
+def histograma_mora(df):
+	fig = px.histogram(df, y='madurez', orientation='h', color='madurez', text_auto=True,
+					   color_discrete_map={'Mora 0': 'coral', 'Mora 15': 'red', 'Mora 30': 'red', 'Mora 45': 'crimson'})
+
+	fig.update_layout(title_text='Mora',
+					  height=500, width=700,
+					  template='simple_white',
+					  bargap=0.1,
+					  showlegend=False)
+
+	fig.update_xaxes(title='Clientes')
+	fig.update_yaxes(title=None)
+
+	return fig
+
+
+def impagos_diarios(df_t):
+	df_t['Meta'] = ['<25%' if goal < 0.25 else '>25%' for goal in df_t['tasa_imago']]
+	fig = px.bar(df_t, x=df_t.index, y='impago', barmode='overlay', color='Meta',
+				 color_discrete_map={'>25%': 'crimson', '<25%': 'lightblue'})
+	fig.update_layout(barnorm='percent', template='simple_white')
+	fig.update_yaxes(title='Tasa de Impago (%)')
+	fig.update_xaxes(title=None)
+
+	return fig
+
+
+##############################################
+def transform(file):
+	# Leer archivo
+	df = pd.read_csv(file)
+
+	# Filtrar para hoy
+	df['fecha_cuota'] = pd.to_datetime(df['fecha_cuota']).dt.date
+	df = df[df['fecha_cuota'] < datetime.date.today()]
+	df.sort_values(by='fecha_cuota', ascending=False, inplace=True)
+
+	# Mantener último saldo por crédito
+	df.drop_duplicates(subset=['id_credito'], keep='first', inplace=True)
+
+	# Agregar columnas
+	df['valor_financiamiento'] = df['valor_financiamiento'].where(df['pais'] == 'El Salvador',
+																  df['valor_financiamiento'] / 25)
+	df['prima'] = df['prima'].where(df['pais'] == 'El Salvador', df['prima'] / 25)
+
+	# Crear total
+	total = df.groupby(['pais', 'estado'])[['id_credito', 'saldo_exigible', 'numero_periodos']].agg(
+		{'id_credito': 'count',
+		 'saldo_exigible': 'sum',
+		 'numero_periodos': 'mean'}).rename(columns={'id_credito':'cuenta','saldo_exigible':'suma de exigible','numero_periodos':'periodos promedio'})
+
+
+	total.reset_index(inplace=True)
+
+	# Seleccionar y mapear columnas
+	cols = ['id_credito', 'saldo_total', 'monto_cuota', 'saldo_exigible', 'numero_periodos', 'valor_financiamiento',
+			'prima']
+
+	mapper = {'id_credito': 'count',
+			  'saldo_total': ['sum', 'mean'],
+			  'monto_cuota': ['sum', 'mean'],
+			  'saldo_exigible': ['sum', 'mean'],
+			  'numero_periodos': 'mean',
+			  'valor_financiamiento': ['sum', 'mean'],
+			  'prima': ['sum', 'mean']
+			  }
+
+	agg_df = total.groupby(['estado', 'num_cuota', 'pais'])[cols].agg(mapper)
+	print(agg_df)
+
+	agg_df.columns = ['Cantidad', 'Saldo Total', 'Saldo Promedio', 'Suma monto cuota', 'Cuota Promedio',
+					  'Exigible Total', 'Exigible Promedio', 'Periodos Promedio', 'Financiamiento Total',
+					  'Financiamiento Promedio', 'Recuperado Total (prima)', 'Recuperado Promedio (prima)']
+
+	agg_df['madurez'] = agg_df.index.get_level_values('num_cuota')
+	agg_df['Deuda Total'] = agg_df['madurez'] * agg_df['Suma monto cuota']
+
+	mora = agg_df.xs('Vencido', level='estado')
+	mora_re = mora.reset_index()
+
+	mora_total = mora.groupby(level='num_cuota').agg(['sum', 'mean'])
+
+	return df, total, agg_df, mora_re, mora_total
+
+
+def impago_time(file):
+	df = pd.read_csv(file)
+
+	# Filtrar para hoy
+	df['fecha_cuota'] = pd.to_datetime(df['fecha_cuota']).dt.date
+	df = df[df['fecha_cuota'] < datetime.date.today()]
+	df.sort_values(by='fecha_cuota', ascending=False, inplace=True)
+
+	# Mantener último saldo por crédito
+	df.drop_duplicates(subset=['id_credito'], keep='first', inplace=True)
+	df['impago'] = [1 if estado == 'Vencido' else 0 for estado in df['estado']]
+	df['ganado'] = df['monto_cuota'].where(df['impago'] == 0, 0)
+	df['exigible'] = df['saldo_exigible'].fillna(0)
+	df['fecha_cuota'] = pd.to_datetime(df['fecha_cuota'])
+	df_t = df[['fecha_cuota', 'id_credito', 'impago', 'monto_cuota', 'ganado', 'exigible']].set_index('fecha_cuota')
+	df_t = df_t.resample('D').agg({'id_credito': 'count',
+								   'impago': 'sum',
+								   'monto_cuota': 'sum',
+								   'ganado': 'sum',
+								   'exigible': 'sum'})
+	df_t['loss'] = df_t['monto_cuota'] - df_t['ganado']
+
+	df_t['tasa_imago'] = df_t['impago'].astype(int) / df_t['id_credito'].astype(int)
+	df_t['esperado_cumulativo'] = df_t['monto_cuota'].cumsum()
+	df_t['ganado_cumulativo'] = df_t['ganado'].cumsum()
+	df_t['perdida_cumulativo'] = df_t['loss'].cumsum()
+	df_t['goal'] = df_t['esperado_cumulativo'] * 0.75
+
+	df_t['date'] = pd.to_datetime(df_t.index)
+	today_date = datetime.today()
+	df_t = df_t[df_t.index < today_date]
+
+	fig = go.Figure(layout=go.Layout(
+		title="Ingresos acumulados",
+		width=1000,
+		height=600,
+		template='simple_white'
+	))
+
+	fig.add_trace(go.Scatter(x=df_t.index,
+							 y=df_t.esperado_cumulativo,
+							 mode='lines',
+							 line=dict(width=0.5, color='coral'),
+							 fill='tozeroy',
+							 name='Ingreso esperado acumulado'))
+
+	fig.add_trace(go.Scatter(x=df_t.index,
+							 y=df_t.ganado_cumulativo,
+							 mode='lines',
+							 line=dict(width=0.5, color='green'),
+							 fill='tozeroy',
+							 name='Ingreso real acumulado'))
+
+	fig.add_trace(go.Scatter(x=df_t.index, y=df_t.goal, mode='lines', line=dict(width=1.5, color='black', dash='dash'),
+							 name='Meta 75%'))
+
+	return df_t, fig
+
+# VISUALIZACION CLIENTES EN MORA POR MADUREZ
+
+def mora_madurez(mora_re):
+
+	data = pd.DataFrame(mora_re.groupby('num_cuota')['Cantidad'].sum())
+	data.reset_index(inplace=True)
+	data.rename(columns={0:'Cantidad'})
+
+	fig = px.bar(data, x='num_cuota', y='Cantidad', text='Cantidad')
+	fig.update_layout(height=600, width=1000, template='simple_white')
+
+	return fig
+
+def mora_madurez_usd(mora_re):
+
+	data = pd.DataFrame(mora_re.groupby('num_cuota')['Exigible Total'].sum())
+	data.reset_index(inplace=True)
+	data.rename(columns={0:'Cantidad'})
+
+	data['num_cuota'] = data['num_cuota'].map({1:'Mora 15',
+											   2:'Mora 30',
+											   3:'Mora 45'})
+
+	fig = px.bar(data, x='Exigible Total', y='num_cuota', text='Exigible Total', orientation='h', color_discrete_sequence=['red','pink'])
+	fig.update_layout(height=600, width=1000, template='simple_white')
+
+	return fig
+
+
+def comparacion(mora_re):
+	fig = px.bar(mora_re, x='num_cuota', y='Cantidad', color='pais', barmode='group', text='Exigible Total', color_discrete_sequence=['coral','pink','orange'])
+	fig.update_layout(height=600, width=600)
+	return fig
