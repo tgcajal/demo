@@ -2,5 +2,5 @@ streamlit==1.23.1
 hmac
 numpy==1.24.4
 pandas==1.4.4
-matplotlib == 1.24.4
+matplotlib
 plotly == 5.9.0
