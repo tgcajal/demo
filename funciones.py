@@ -23,8 +23,14 @@ def load_mora_df(file):
 	return df
 
 
-def load_df_t(file):
+def load_df_t(file, pais):
 	df_cashflow = pd.read_csv(file)
+
+	if pais:
+		df_cashflow = df_cashflow[df_cashflow['pais'] == pais]
+	else:
+		df_cashflow = df_cashflow
+
 	df_cashflow['impago'] = [1 if x == 'Vencido' else 0 for x in df_cashflow['estado']]
 	df_cashflow['pagado'] = df_cashflow['monto_cuota'].where(df_cashflow['impago'] == 0, 0)
 	df_cashflow['fecha_cuota'] = pd.to_datetime(df_cashflow['fecha_cuota'])
