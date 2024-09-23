@@ -89,6 +89,7 @@ with tab1:
 
 with tab2:
 	df = f.load_mora_df('mora.csv')
+	df = df[df['pais']=='El Salvador']
 	df_t = f.load_df_t('cashflow.csv',pais='El Salvador')
 
 	agg_df = df.groupby(['pais', 'nombre_empresa', 'nombre_sucursal', 'vendedor', 'madurez'])[
@@ -121,6 +122,7 @@ with tab2:
 
 with tab3:
 	df = f.load_mora_df('mora.csv')
+	df = df[df['pais']=='Honduras']
 	df_t = f.load_df_t('cashflow.csv', pais='Honduras')
 
 	agg_df = df.groupby(['pais', 'nombre_empresa', 'nombre_sucursal', 'vendedor', 'madurez'])[
