@@ -49,8 +49,8 @@ if not check_password():
     st.stop()
 
 #df, total, agg_df, mora_re, mora_total = f.transform('/Users/tgcajal/PycharmProjects/DemoBI/CASHFLOW.csv')
-df = f.load_mora_df('/Users/tgcajal/PycharmProjects/DemoBI/mora.csv')
-df_t = f.load_df_t('/Users/tgcajal/PycharmProjects/DemoBI/cashflow.csv')
+df = f.load_mora_df('mora.csv')
+df_t = f.load_df_t('cashflow.csv')
 
 agg_df = df.groupby(['pais','nombre_empresa','nombre_sucursal','vendedor','madurez'])[['id_credito','cuota','exigible_moneda','cuotas_pendientes','cuotas_totales']].agg({'id_credito':'count',
 																																					   'cuota':'mean',
