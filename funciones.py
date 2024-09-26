@@ -88,7 +88,7 @@ def histograma_mora(df):
 	fig = px.histogram(df, y='madurez', orientation='h', color='madurez', text_auto=True,
 					   color_discrete_map={'Mora 0': 'coral', 'Mora 15': 'red', 'Mora 30': 'red', 'Mora 45': 'crimson'})
 
-	fig.update_layout(title_text='Mora',
+	fig.update_layout(title_text='Cantidad de clientes en mora',
 					  height=500, width=700,
 					  template='simple_white',
 					  bargap=0.1,
@@ -115,7 +115,7 @@ def histograma_moneda(df):
 					  showlegend=False,
 					  xaxis_tickprefix="$")
 
-	fig.update_xaxes(title='Promedio de saldo exigible')
+	fig.update_xaxes(title='Suma de saldo exigible')
 	fig.update_yaxes(title=None)
 
 	return fig
