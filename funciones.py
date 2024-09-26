@@ -101,15 +101,19 @@ def histograma_mora(df):
 
 
 def histograma_moneda(df):
+
+	df['exigible_moneda'] = [round(x,2) for x in df['exigible_moneda']]
+
 	fig = px.histogram(df, y='madurez', x='exigible_moneda', orientation='h', color='madurez', text_auto=True,
-					   histfunc='avg',
+					   histfunc='sum',
 					   color_discrete_map={'Mora 0': 'coral', 'Mora 15': 'red', 'Mora 30': 'red', 'Mora 45': 'crimson'})
 
 	fig.update_layout(title_text='Saldo exigible por mora',
 					  height=500, width=700,
 					  template='simple_white',
 					  bargap=0.1,
-					  showlegend=False)
+					  showlegend=False,
+					  xaxis_tickprefix="$")
 
 	fig.update_xaxes(title='Promedio de saldo exigible')
 	fig.update_yaxes(title=None)
