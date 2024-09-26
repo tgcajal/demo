@@ -71,7 +71,7 @@ with tab1:
 		col1, col2 = st.columns(2)
 
 		col1.plotly_chart(f.histograma_mora(df),use_container_width=True)
-		col2.dataframe(df_t)
+		col2.plotly_chart(f.histograma_moneda(df),use_container_width=True)
 
 	st.plotly_chart(f.impagos_diarios(df_t),use_container_width=True)
 

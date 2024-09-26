@@ -23,7 +23,7 @@ def load_mora_df(file):
 	return df
 
 
-def load_df_t(file, pais):
+def load_df_t(file, pais=None):
 	df_cashflow = pd.read_csv(file)
 
 	if pais:
@@ -98,6 +98,24 @@ def histograma_mora(df):
 	fig.update_yaxes(title=None)
 
 	return fig
+
+
+def histograma_moneda(df):
+	fig = px.histogram(df, y='madurez', x='exigible_moneda', orientation='h', color='madurez', text_auto=True,
+					   histfunc='avg',
+					   color_discrete_map={'Mora 0': 'coral', 'Mora 15': 'red', 'Mora 30': 'red', 'Mora 45': 'crimson'})
+
+	fig.update_layout(title_text='Saldo exigible por mora',
+					  height=500, width=700,
+					  template='simple_white',
+					  bargap=0.1,
+					  showlegend=False)
+
+	fig.update_xaxes(title='Promedio de saldo exigible')
+	fig.update_yaxes(title=None)
+
+	return fig
+
 
 
 def impagos_diarios(df_t):
