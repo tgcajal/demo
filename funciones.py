@@ -325,7 +325,7 @@ def saldo_mora_fig(data):
 
     return fig
 
-def pagos_acumulados_fig(df_t):
+def pagos_acumulados(df_t):
     fig = go.Figure(data=[
 		
 		go.Bar(name='Pagos', 
