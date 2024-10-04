@@ -49,6 +49,8 @@ def load_df_t(file, pais=None):
 
 	df_t['goal'] = df_t['esperado_cumulativo'] * 0.75
 
+	df_t['meta_cantidad'] = round(df_t['id_credito']*0.25).astype(int)
+
 	today_date = datetime.today()
 	df_t = df_t[df_t.index < today_date]
 
