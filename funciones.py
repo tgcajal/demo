@@ -293,8 +293,8 @@ def process2(df, df_cashflow):
 	union['deuda_total'] = union['cuota']*union['numero_periodos']
 	data = union[['pais_x', 'id_credito', 'dias_mora','saldo_total_x', 'cuotas_pendientes_x', 'num_cuota', 'saldo_exigible','estado','valor_financiamiento','impago','pagado','deuda_total']]
 	data.columns = ['País', 'ID Crédito', 'Días Mora', 'Saldo Total', 'Cuotas Pendientes', 'No Cuota', 'Saldo Exigible','Estado', 'Valor Financiamiento', 'Impago', 'Pagado', 'Monto Crédito']
-	#data.fillna(0, inplace=True)
-	data.drop(columns=['CP'], inplace=True)
+	data.fillna(0, inplace=True)
+	#data.drop(columns=['CP'], inplace=True)
 	data['Días Mora'] = data['Días Mora'].astype(int)
 	data['Cuotas Pendientes'] = data['Cuotas Pendientes'].astype(int)
 	data['No Cuota'] = data['No Cuota'].astype(int)
