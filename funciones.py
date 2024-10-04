@@ -318,7 +318,7 @@ def saldo_mora_fig(data):
 
     fig.update_layout(title_text='Saldo por categoría de mora',
                     #text_template='Saldo Total',
-                    height=500, width=700,
+                    #height=500, width=700,
                     template='simple_white',
                     bargap=0.1,
                     showlegend=False)
