@@ -218,6 +218,7 @@ def impago_time(file):
 	df_t['ganado_cumulativo'] = df_t['ganado'].cumsum()
 	df_t['perdida_cumulativo'] = df_t['loss'].cumsum()
 	df_t['goal'] = df_t['esperado_cumulativo'] * 0.75
+	df_t['meta_cantidad'] = round(df_t['id_credito']*0.25).astype(int)
 
 	df_t['date'] = pd.to_datetime(df_t.index)
 	today_date = datetime.today()
