@@ -287,24 +287,22 @@ def comparacion(mora_re):
 # CREAR DATA
 
 def process2(df, df_cashflow):
-
-    union = df.merge(df_cashflow, how='outer', on='id_credito')
-    data = union[['pais_x', 'id_credito', 'dias_mora','saldo_total_x', 'cuotas_pendientes_x', 'num_cuota', 'saldo_exigible','estado','valor_financiamiento','impago','pagado','deuda_total']]
-    data.columns = ['País', 'ID Crédito', 'Días Mora', 'Saldo Total', 'Cuotas Pendientes', 'CP', 'No Cuota', 'Saldo Exigible','Estado', 'Valor Financiamiento', 'Impago', 'Pagado', 'Monto Crédito']
-    data.fillna(0, inplace=True)
-    data.drop(columns=['CP'], inplace=True)
-    data['Días Mora'] = data['Días Mora'].astype(int)
-
-    data['Cuotas Pendientes'] = data['Cuotas Pendientes'].astype(int)
-    data['No Cuota'] = data['No Cuota'].astype(int)
-    data['Impago'] = data['Impago'].astype(int)
-
-    data['Estado Mora'] = data['Cuotas Pendientes'].map({0:'Sin Mora',
+	mapper = df[['id_credito','cuotas_pendientes']]
+	df_cashflow = df_cashflow.merge(mapper,how='left',on='id_credito')
+	union = df.merge(df_cashflow, how='outer', on='id_credito')
+	data = union[['pais_x', 'id_credito', 'dias_mora','saldo_total_x', 'cuotas_pendientes_x', 'num_cuota', 'saldo_exigible','estado','valor_financiamiento','impago','pagado','deuda_total']]
+	data.columns = ['País', 'ID Crédito', 'Días Mora', 'Saldo Total', 'Cuotas Pendientes', 'CP', 'No Cuota', 'Saldo Exigible','Estado', 'Valor Financiamiento', 'Impago', 'Pagado', 'Monto Crédito']
+	data.fillna(0, inplace=True)
+	data.drop(columns=['CP'], inplace=True)
+	data['Días Mora'] = data['Días Mora'].astype(int)
+	data['Cuotas Pendientes'] = data['Cuotas Pendientes'].astype(int)
+	data['No Cuota'] = data['No Cuota'].astype(int)
+	data['Impago'] = data['Impago'].astype(int)
+	data['Estado Mora'] = data['Cuotas Pendientes'].map({0:'Sin Mora',
                                                      1:'Mora 15',
                                                      2:'Mora 30',
                                                      3:'Mora 45'})
-    
-    return data
+	return data
 
 # NUEVAS FIGURAS
 
