@@ -50,7 +50,8 @@ if not check_password():
 
 #df, total, agg_df, mora_re, mora_total = f.transform('/Users/tgcajal/PycharmProjects/DemoBI/CASHFLOW.csv')
 df = f.load_mora_df('mora.csv')
-df_t = f.load_df_t('cashflow.csv', pais=None)
+df_t, df_cashflow = f.load_df_t('cashflow.csv', pais=None)
+data = f.process2(df, df_cashflow)
 
 agg_df = df.groupby(['pais','nombre_empresa','nombre_sucursal','vendedor','madurez'])[['id_credito','cuota','exigible_moneda','cuotas_pendientes','cuotas_totales']].agg({'id_credito':'count',
 																																					   'cuota':'mean',
@@ -70,10 +71,10 @@ with tab1:
 		st.header('Clientes en mora')
 		col1, col2 = st.columns(2)
 
-		col1.plotly_chart(f.histograma_mora(df),use_container_width=True)
+		col1.plotly_chart(f.saldo_mora_fig(data),use_container_width=True)
 		col2.plotly_chart(f.histograma_moneda(df),use_container_width=True)
 
-	st.plotly_chart(f.impagos_diarios(df_t),use_container_width=True)
+	st.plotly_chart(f.pagos_acumulados(df_t),use_container_width=True)
 
 	st.divider()
 
@@ -108,7 +109,7 @@ with tab2:
 		col2.plotly_chart(f.histograma_moneda(df),use_container_width=True)
 		#col2.dataframe(df_t)
 
-	st.plotly_chart(f.impagos_diarios(df_t),use_container_width=True)
+	st.plotly_chart(f.pagos_acumulados(df_t),use_container_width=True)
 
 	st.divider()
 
@@ -141,7 +142,7 @@ with tab3:
 		col2.plotly_chart(f.histograma_moneda(df),use_container_width=True)
 		#col2.dataframe(df_t)
 
-	st.plotly_chart(f.impagos_diarios(df_t),use_container_width=True)
+	st.plotly_chart(f.pagos_acumulados(df_t),use_container_width=True)
 
 	st.divider()
 

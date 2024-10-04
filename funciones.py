@@ -52,7 +52,7 @@ def load_df_t(file, pais=None):
 	today_date = datetime.today()
 	df_t = df_t[df_t.index < today_date]
 
-	return df_t
+	return df_t, df_cashflow
 
 
 # %%
@@ -282,3 +282,98 @@ def comparacion(mora_re):
 	fig = px.bar(mora_re, x='num_cuota', y='Cantidad', color='pais', barmode='group', text='Exigible Total', color_discrete_sequence=['coral','pink','orange'])
 	fig.update_layout(height=600, width=600)
 	return fig
+
+
+# CREAR DATA
+
+def process2(df, df_cashflow):
+
+    union = df.merge(df_cashflow, how='outer', on='id_credito')
+    data = union[['pais_x', 'id_credito', 'dias_mora','saldo_total_x', 'cuotas_pendientes_x', 'num_cuota', 'saldo_exigible','estado','valor_financiamiento','impago','pagado','deuda_total']]
+    data.columns = ['País', 'ID Crédito', 'Días Mora', 'Saldo Total', 'Cuotas Pendientes', 'CP', 'No Cuota', 'Saldo Exigible','Estado', 'Valor Financiamiento', 'Impago', 'Pagado', 'Monto Crédito']
+    data.fillna(0, inplace=True)
+    data.drop(columns=['CP'], inplace=True)
+    data['Días Mora'] = data['Días Mora'].astype(int)
+
+    data['Cuotas Pendientes'] = data['Cuotas Pendientes'].astype(int)
+    data['No Cuota'] = data['No Cuota'].astype(int)
+    data['Impago'] = data['Impago'].astype(int)
+
+    data['Estado Mora'] = data['Cuotas Pendientes'].map({0:'Sin Mora',
+                                                     1:'Mora 15',
+                                                     2:'Mora 30',
+                                                     3:'Mora 45'})
+    
+    return data
+
+# NUEVAS FIGURAS
+
+def saldo_mora_fig(data):
+    
+    fig = px.histogram(data, y='Estado Mora', x='Saldo Total', orientation='h', color='Estado Mora', text_auto=True,category_orders={'Estado Mora':['Sin Mora','Mora 15','Mora 30','Mora 45']},color_discrete_map={'Sin Mora':'lightgreen', 'Mora 15':'violet','Mora 30':'purple', 'Mora 45':'crimson'})
+
+    fig.update_traces(texttemplate='$%{x:,.2f}')
+
+    fig.update_layout(title_text='Saldo por categoría de mora',
+                    #text_template='Saldo Total',
+                    height=500, width=700,
+                    template='simple_white',
+                    bargap=0.1,
+                    showlegend=False)
+
+    fig.update_xaxes(title='Suma de Saldo Total')
+    fig.update_yaxes(title=None)
+
+    return fig
+
+def pagos_acumulados_fig(df_t):
+    fig = go.Figure(data=[
+		
+		go.Bar(name='Pagos', 
+			x=df_t.index, 
+			y=df_t.id_credito.cumsum(),
+			marker=dict(color='green'),
+			opacity=0.6,
+			text=df_t.monto_cuota.cumsum(),
+			texttemplate='$%{text:,.2f}',
+			textposition='inside'),
+		
+		go.Bar(name='Impagos', 
+			x=df_t.index, 
+			y=df_t.impago.cumsum(),
+			marker=dict(
+				color='indigo',
+				#colorscale='Reds',
+				#colorbar=dict(title="Value")
+			),
+			#opacity=0.6,
+			text=df_t.loss.cumsum(),
+			texttemplate='$%{text:,.2f}',
+			textposition='inside'),
+		
+		go.Bar(name='Impagos esperados', 
+			x=df_t.index, 
+			y=df_t.meta_cantidad.cumsum(),
+			marker=dict(
+				color='black',
+				opacity=0.3,
+				#colorscale='Reds',
+				#colorbar=dict(title="Value")
+			),
+			#opacity=0.6,
+			text=df_t.loss.cumsum(),
+			#customdata=np.transpose([labels, widths*data[key]]),
+			#texttemplate="%{y} x %{width} =<br>%{customdata[1]}",
+			texttemplate='$%{text:,.2f}',
+			textposition='inside'
+		),
+		
+		#go.Scatter(name='Límite 25% impago',
+		#		   x=df_t.index,
+		#		   y=df_t.meta_cantidad,
+		#		   mode='lines+markers',
+		#		   marker=dict(color='yellow'),)
+	])
+    fig.update_layout(title='Pagos acumulados', template='simple_white', barmode='overlay',height=600, width=1200)
+    return fig
+
