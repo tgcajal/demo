@@ -72,8 +72,9 @@ with tab1:
 		col1, col2 = st.columns(2)
 
 		col1.plotly_chart(f.saldo_mora_fig(data),use_container_width=True)
-		col2.plotly_chart(f.histograma_moneda(df),use_container_width=True)
-
+		#col2.plotly_chart(f.histograma_moneda(df),use_container_width=True)
+		col2.dataframe(data)
+                
 	st.plotly_chart(f.pagos_acumulados(df_t),use_container_width=True)
 
 	st.divider()
