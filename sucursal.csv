@@ -1,0 +1,98 @@
+,id_sucursal,id_empresa,nombre_sucursal,departamento,municipio,nombre_empresa,pais_empresa,email,codigo_banco,numero_cuenta,tipo_cuenta,tipo_persona,comision_vendedor,comision_dealer,tipo_comision
+0,243,54,Punto Celular Metrocentro 4 Etapa,San Salvador,San Salvador,"DIVERCELL, S.A. DE C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540026494.0,COR,NAT,5.0,5.0,POR
+1,244,54,Punto Celular Metrocentro 7 Etapa,San Salvador,San Salvador,"DIVERCELL, S.A. DE C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540026494.0,COR,NAT,5.0,5.0,POR
+2,247,54,Punto Celular Plaza Centro,San Salvador,San Salvador,"DIVERCELL, S.A. DE C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540026494.0,COR,NAT,5.0,5.0,POR
+3,373,54,Divercell Mundo Apopa 1,San Salvador,Apopa,"DIVERCELL, S.A. DE C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540026494.0,COR,NAT,5.0,5.0,POR
+4,380,54,Punto Celular Kiosco mundo 2 Soyapango,San Salvador,Soyapango,"DIVERCELL, S.A. DE C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540026494.0,COR,NAT,5.0,5.0,POR
+5,381,54,Punto Celular Kiosco Mundo 1,San Salvador,Soyapango,"DIVERCELL, S.A. DE C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540026494.0,COR,NAT,5.0,5.0,POR
+6,382,54,MULTIPLAZA LA LIBERTAD,La Libertad,Antiguo Cuscatlán,"DIVERCELL, S.A. DE C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540026494.0,COR,NAT,5.0,5.0,POR
+7,383,54,PUNTO CELULAR LOURDES 1,La Libertad,Colón,"DIVERCELL, S.A. DE C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540026494.0,COR,NAT,5.0,5.0,POR
+8,384,54,PUNTO CELULAR LOURDES 2,La Libertad,Colón,"DIVERCELL, S.A. DE C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540026494.0,COR,NAT,5.0,5.0,POR
+9,446,54,CELL COMP  METROCENTRO  7 a ETAPA,San Salvador,San Salvador,"DIVERCELL, S.A. DE C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540026494.0,COR,NAT,5.0,5.0,POR
+10,320,4,TIENDA  MAVERICK STORE METROCENTRO 8a ETAPA,San Salvador,San Salvador,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+11,321,4,Tienda Maverick Store Metrocentro SS,San Salvador,San Salvador,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+12,391,4,MAVERICK STORE SONSONATE MODELO 1,,sonsonate,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+13,393,4,MAVERICK STORE   SONSONATE  MODELO 2,Sonsonate,Sonsonate,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+14,394,4,SONSONATE 1,Sonsonate,Sonsonate,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+15,395,4,SONSONATE 2,Sonsonate,Sonsonate,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+16,396,4,SONSONATE 3,Sonsonate,Sonsonate,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+17,397,4,AHUACHAPAN - 1,Ahuachapán,Ahuachapán,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+18,398,4,AHUACHAPAN - 3,Ahuachapán,Ahuachapán,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+19,399,4,Maverick Store Soyapango Plaza Mundo,San Salvador,Soyapango,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+20,400,4,Maverick Store Mundo 2  Soyapango,San Salvador,Soyapango,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+21,401,4,TIENDA MAVERICK STORE METROCENTRO LOURDES,La Libertad,Colón,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+22,402,4,Tienda Maverick Store Chalatenango,Chalatenango,Chalatenango,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+23,403,4,MAVERICK STORE METROCENTRO 3a ETAPA,San Salvador,San Salvador,Maverick Store S.A. de C.V.,El Salvador,jmaltez@maverick.com.sv,5,7301000033278.0,COR,NAT,5.0,5.0,POR
+24,329,67,TU CELL LA UNIÓN,La Unión,La Unión,TU CELL,El Salvador,adalbertoamaya129@gmail.com,5,777541765500.0,AHO,NAT,5.0,5.0,POR
+25,330,68,Oficina Central - Centro Despacho,La Libertad,Antiguo Cuscatlán,"Inversiones Totales, S.A.",El Salvador,,0,,,,,,
+26,331,75,Oficina Central - Honduras,FRANCISCO MORAZÁN,DISTRITO CENTRAL,"Proyectos Disruptivos, S.A.",Honduras,,5,,AHO,NAT,50.0,50.0,POR
+27,332,70,kiosco colonia hospital esc.,TEGUCIGALPA,,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+28,333,70,(comodin) tienda principal toncontin,TEGUCIGALPA,,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+29,334,70,colonia las torres,TEGUCIGALPA,,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+30,335,70,Tienda Paiz Proceres,TEGUCIGALPA,,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+31,337,70,Mall Premier-1,TEGUCIGALPA,,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+32,339,70,Comayagua no. 1,COMAYAGUA,,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+33,340,70,comayagua no. .1,COMAYAGUA,,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+34,342,70,Comayagua no. 3,COMAYAGUA,SIGUATEPEQUE,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+35,343,70,Comayagua no. 4,COMAYAGUA,SIGUATEPEQUE,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+36,344,70,Mall Plaza Miraflores,TEGUCIGALPA,,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+37,345,70,Tienda Siguatepeque 1,COMAYAGUA,SIGUATEPEQUE,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+38,371,70,Tienda Principal Toncontin-2,,,Importadora Godoy,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+39,347,71,Mall Multiplaza,FRANCISCO MORAZÁN,Tegucigalpa,Inversiones Priyanka SA,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+40,372,71,Mall Las Cascadas,FRANCISCO MORAZÁN,Tegucigalpa,Inversiones Priyanka SA,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+41,348,72,City Mall-1,CORTÉS,SAN PEDRO SULA,DIATEL S.A,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+42,349,72,City Mall-2,CORTÉS,SAN PEDRO SULA,DIATEL S.A,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+43,352,72,Mall GALERIAS -1,CORTÉS,SAN PEDRO SULA,DIATEL S.A,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+44,353,72,Mall GALERIAS -2,,,DIATEL S.A,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+45,354,72,Mall GALERIAS -3,,,DIATEL S.A,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+46,356,72,DIUNSA Salida La Lima-1,,,DIATEL S.A,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+47,357,72,DIUNSA Salida La Lima-2,,,DIATEL S.A,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+48,358,72,Mall Multiplaza-1,,,DIATEL S.A,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+49,359,72,Mall Multiplaza-2,,,DIATEL S.A,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+50,360,72,Mall Multiplaza-3,,,DIATEL S.A,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+51,362,69,Tienda 1,,,Innovaciones Expocel,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+52,363,69,Tienda 2,,,Innovaciones Expocel,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+53,364,69,Tienda 3,,,Innovaciones Expocel,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+54,365,69,Tienda 4,,,Innovaciones Expocel,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+55,366,69,Tienda 5,,,Innovaciones Expocel,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+56,367,69,Tienda 6,,,Innovaciones Expocel,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+57,368,73,Tienda Principal- A,,,Inversiones R&E,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+58,369,74,Tienda principal- B,,,Galocel,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+59,370,76,Tienda Principal Valle de Angeles,FRANCISCO MORAZÁN,VALLE DE ÁNGELES,Inversiones del Valle,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+60,375,77,TIENDA CARPA,COMAYAGUA,,Inversiones Eben Ezer,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+61,376,77,Inversiones Eben 2,COMAYAGUA,,Inversiones Eben Ezer,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+62,377,77,Inversiones Eben 1,COMAYAGUA,,Inversiones Eben Ezer,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+63,378,77,goodmovil,COMAYAGUA,,Inversiones Eben Ezer,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+64,433,77,Tienda principal,COMAYAGUA,,Inversiones Eben Ezer,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+65,389,10,Tienda Maverick San Vicente,San Vicente,San Vicente,"Maverick El Salvador, S.A. de C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540018505.0,COR,NAT,5.0,5.0,POR
+66,390,10,Tienda Maverick Cojutepeque,Cuscatlán,Cojutepeque,"Maverick El Salvador, S.A. de C.V.",El Salvador,jmaltez@maverick.com.sv,5,2540018505.0,COR,NAT,5.0,5.0,POR
+67,404,78,PRINCIPAL,ISLAS DE LA BAHÍA,ROATAN,INVERSIONES JADE,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+68,405,79,Movilcell Siguatepeque,COMAYAGUA,SIGUATEPEQUE,MOVILCELL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+69,406,80,Tienda Chico Cell  City Malll,FRANCISCO MORAZÁN,DISTRITO CENTRAL,CHICO CELL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+70,407,80,Tienda Chico Cell Villanueva,CORTÉS,VILLANUEVA,CHICO CELL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+71,408,80,Tienda Chico Cell Mall Premier 1,,Distrito Central,CHICO CELL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+72,409,80,Tienda Chico Cell Metro Mall 1,FRANCISCO MORAZÁN,DISTRITO CENTRAL,CHICO CELL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+73,410,80,Tienda Chico Cell Metro Malll 2,FRANCISCO MORAZÁN,DISTRITO CENTRAL,CHICO CELL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+74,411,80,Tienda Chico Cell Plaza Miraflores,FRANCISCO MORAZÁN,DISTRITO CENTRAL,CHICO CELL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+75,412,80,Kiosco Chico Cell Metro  Mall,FRANCISCO MORAZÁN,DISTRITO CENTRAL,CHICO CELL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+76,413,80,Kiosco Chico Cell City Mall,FRANCISCO MORAZÁN,DISTRITO CENTRAL,CHICO CELL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+77,414,81,TIENDA UNIPLAZA,OLANCHO,JUTICALPA,PALO ALTO,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+78,415,81,TIENDA POETAS,OLANCHO,JUTICALPA,PALO ALTO,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+79,416,81,TIENDA PLAZA LA ROSA,OLANCHO,CATACAMAS,PALO ALTO,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+80,438,81,DANLI - 1,EL PARAÍSO,DANLI,PALO ALTO,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+81,440,81,El PARAISO -2,EL PARAÍSO,EL PARAÍSO,PALO ALTO,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+82,419,82,Kennedy,FRANCISCO MORAZÁN,Tegucigalpa,RECARGAS VIRTUALES,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+83,420,82,Novacentro,FRANCISCO MORAZÁN,Tegucigalpa,RECARGAS VIRTUALES,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+84,430,82,San Marcos de Colon,CHOLUTECA,San Marcos de Colon,RECARGAS VIRTUALES,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+85,421,83,TIENDA TECNOCEL - A,OLANCHO,Campamento,TECNOCEL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+86,423,83,TIENDA TECNOCEL - C,OLANCHO,CAMPAMENTO,TECNOCEL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+87,424,84,TIENDA ASOC -COPÁN,COPÁN,Santa Rosa de Copán,ASOC,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+88,428,84,Mobile Phone,,,ASOC,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+89,429,84,TIENDA D-CELL,FRANCISCO MORAZÁN,Guaimaca,ASOC,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+90,434,85,PRINCIPAL  SPS,,,TERCEL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+91,436,85,PLAZA CENTURY SPS,,,TERCEL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+92,441,85,TALANGA,FRANCISCO MORAZÁN,TALANGA,TERCEL,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+93,467,89,CELL STORE CASA MATRIZ,La Unión,La Unión,JC TURCIOS,El Salvador,,0,,,,,,
+94,468,89,CELL STORE  PLUS -1,La Unión,La Unión,JC TURCIOS,El Salvador,,0,,,,,,
+95,469,90,D-DIEGO STORE,SIGUATEPEQUE,COMAYAGUA,D-DIEGO STORE,Honduras,,5,,AHO,NAT,50.0,50.0,POR
+96,471,91,Ocotepeque,OCOTEPEQUE,OCOTEPEQUE,UNIVERSO CELULAR,Honduras,,0,,,,,,

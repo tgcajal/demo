@@ -378,4 +378,3 @@ def pagos_acumulados(df_t):
 	])
     fig.update_layout(title='Pagos acumulados', template='simple_white', barmode='overlay',height=600, width=1200)
     return fig
-
