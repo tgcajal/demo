@@ -14,5 +14,5 @@ import transform
 st.set_page_config(layout="wide")
 import security
 
-import mapas
+#import mapas
 import comparison
