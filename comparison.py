@@ -13,7 +13,7 @@ tasa_impago = [list(data.loc[value]['tasa_impago']) for value in vendedores]
 
 data_impagos = {'Vendedor':list(vendedores),
                 'Ventas Semanales': ventas,
-                'Ventas Acumuladas':np.array(ventas).cumsum(),
+                'Ventas Acumuladas':pd.Series(ventas).cumsum(),
                 'Tasa Impago': tasa_impago}
 
 column_configuration = {
