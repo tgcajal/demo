@@ -89,7 +89,7 @@ def index_chain_transform(mora_csv,cashflow_csv):
     ejemplo_['deuda'] = ejemplo_['monto_cuota'] - ejemplo_['pagado']
     ejemplo_['semana_cosecha'] = ejemplo_['semana_cosecha'].astype(int)
 
-    data = ejemplo_.groupby(['vendedor','semana_cosecha']).sum()
+    data = ejemplo_.groupby(['vendedor','semana_cosecha'])[ejemplo_.select_dtypes('number').columns].sum()
     data['tasa_impago'] = 1 - data['fecha_pago']/data['id_credito']
 
     return data
