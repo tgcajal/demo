@@ -4,6 +4,7 @@ import numpy as np
 import pandas as pd 
 import geopandas as gpd
 import transform as transform
+import streamlit_folium 
 import folium
 import geopandas as gpd
 import matplotlib.pyplot as plt

@@ -209,6 +209,8 @@ def prep(mora, cashflow):
     grouped['mora'] = 'Mora '+grouped['cuotas_pendientes'].astype(str)
     grouped['mora'] = grouped['mora'].where(grouped['estado_pago']=='Impago','Al día')
     grouped['mora'] = grouped['mora'].where(grouped['estado_pago']!='Pagado','Pagado')
+    grouped['semana_cosecha'] = grouped['fecha_cuota'] - timedelta(15)
+    grouped['semana_cosecha'] = grouped['semana_cosecha'].where(grouped['num_cuota']==1, 0)
 
     data = grouped.merge(mora[['id_credito','fecha_solicitud','nombre_empresa','nombre_sucursal','vendedor']], how='left', on='id_credito')
 
