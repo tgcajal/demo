@@ -2,6 +2,10 @@ import pandas as pd
 import numpy as np
 import datetime
 from datetime import datetime, timedelta
+import plotly 
+import plotly.express as px 
+import plotly.graph_objects as go
+
 import streamlit as st
 
 def transform(mora_csv, cashflow_csv):
@@ -37,7 +41,7 @@ def transform(mora_csv, cashflow_csv):
     
     df['Mora'] = df['Mora'].where(df['pago']==0, 'Pagado')
 
-    return df
+    return df, mora_df, cashflow_df
 
 
 def index_chain_transform(mora_csv,cashflow_csv):
@@ -88,6 +92,7 @@ def index_chain_transform(mora_csv,cashflow_csv):
     data['tasa_impago'] = 1 - data['fecha_pago']/data['id_credito']
 
     return data
+##############
 
 
 ##############

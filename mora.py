@@ -1,4 +1,6 @@
 import streamlit as st 
+st.set_page_config(layout="wide")
+
 import hmac
 import pandas as pd 
 import numpy as np
@@ -11,8 +13,8 @@ from matplotlib.colors import Normalize
 
 import transform
 
-st.set_page_config(layout="wide")
 import security
+import impagos
 
 #import mapas
 import comparison
