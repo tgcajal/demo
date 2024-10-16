@@ -2,6 +2,7 @@ import pandas as pd
 import numpy as np
 import datetime
 from datetime import datetime, timedelta
+import streamlit as st
 
 def transform(mora_csv, cashflow_csv):
 
@@ -41,8 +42,8 @@ def transform(mora_csv, cashflow_csv):
 
 def index_chain_transform(mora_csv,cashflow_csv):
 
-    mora  = pd.read_csv('mora.csv')
-    cashflow = pd.read_csv('cashflow.csv')
+    mora  = pd.read_csv(mora_csv)
+    cashflow = pd.read_csv(cashflow_csv)
 
     merged= cashflow.merge(mora, how='left', on='id_credito')
     today = datetime.today()
@@ -85,5 +86,130 @@ def index_chain_transform(mora_csv,cashflow_csv):
 
     data = ejemplo_.groupby(['vendedor','semana_cosecha']).sum()
     data['tasa_impago'] = 1 - data['fecha_pago']/data['id_credito']
+
+    return data
+
+
+##############
+
+def filter_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    """
+    Adds a UI on top of a dataframe to let viewers filter columns
+
+    Args:
+        df (pd.DataFrame): Original dataframe
+
+    Returns:
+        pd.DataFrame: Filtered dataframe
+    """
+    modify = st.checkbox("Add filters")
+
+    if not modify:
+        return df 
+    
+
+df = pd.DataFrame()
+df = df.copy()
+
+# Try to convert datetimes into a standard format (datetime, no timezone)
+for col in df.columns:
+    if pd.api.types.is_object_dtype(df[col]):
+        try:
+            df[col] = pd.to_datetime(df[col])
+        except Exception:
+            pass
+        
+        if pd.api.types.is_datetime64_any_dtype(df[col]):
+            df[col] = df[col].dt.tz_localize(None)
+
+
+
+modification_container = st.container()
+
+with modification_container:
+    to_filter_columns = st.multiselect("Filter por: ", df.columns)
+
+for column in to_filter_columns:
+    left, right = st.columns((1, 20))
+    left.write("↳")
+
+    # Treat columns with < 10 unique values as categorical
+    if pd.api.types.is_categorical_dtype(df[column]) or df[column].nunique() < 10:
+        user_cat_input = right.multiselect(
+            f"Valores {column}",
+            df[column].unique(),
+            default=list(df[column].unique()),
+        )
+        df = df[df[column].isin(user_cat_input)]
+
+    elif pd.api.types.is_numeric_dtype(df[column]):
+        _min = float(df[column].min())
+        _max = float(df[column].max())
+        step = (_max - _min) / 100
+        user_num_input = right.slider(
+        f"Values for {column}",
+        min_value=_min,
+        max_value=_max,
+        value=(_min, _max),
+        step=step,
+        )
+        df = df[df[column].between(*user_num_input)]
+
+    elif pd.api.types.is_datetime64_any_dtype(df[column]):
+        user_date_input = right.date_input(
+            f"Valores for {column}",
+            value=(
+                df[column].min(),
+                df[column].max(),
+            ),
+        )
+        if len(user_date_input) == 2:
+            user_date_input = tuple(map(pd.to_datetime, user_date_input))
+            start_date, end_date = user_date_input
+            df = df.loc[df[column].between(start_date, end_date)]
+
+    else:
+        user_text_input = right.text_input(
+            f"Substring or regex in {column}",
+        )
+        if user_text_input:
+            df = df[df[column].astype(str).str.contains(user_text_input)]
+
+
+##########
+#Latest transform
+
+def prep(mora, cashflow):
+
+    mora = pd.read_csv(mora)
+    cashflow=pd.read_csv(cashflow)
+
+    cashflow['fecha_cuota'] = pd.to_datetime(cashflow['fecha_cuota'])
+    mora['fecha_solicitud'] = pd.to_datetime(mora['fecha_solicitud'])
+
+    cashflow['estado_pago'] = cashflow['estado'].map({'Pagado a Tiempo':'Pagado',
+                                                  'Pagado Retraso':'Pagado',
+                                                  'Vencido':'Impago',
+                                                  'Exigible':'Al día',
+                                                  'Fijo':'Al día'})
+
+    grouped = cashflow.groupby(['pais','estado_pago','id_credito','num_cuota','fecha_cuota'])[['id_amortizacion','monto_cuota']].agg({'id_amortizacion':'count',
+                                                                                                                   'monto_cuota':'sum'}).sort_index(level=[3,4]).reset_index()
+
+    grouped['recibido'] = grouped['estado_pago'].map({'Pagado':1,
+                                                  'Impago':0})
+    grouped['monto_recibido'] = grouped['recibido'] * grouped['monto_cuota']
+
+    grouped.sort_values(by=['id_credito','num_cuota'],inplace=True)
+    grouped['monto_esperado'] = grouped.groupby('id_credito')['monto_cuota'].cumsum()
+    grouped['monto_recibido_acumulado'] = grouped.groupby('id_credito')['monto_recibido'].cumsum()
+    grouped['pagos_esperados'] = grouped.groupby(['id_credito'])['id_amortizacion'].cumsum()
+    grouped['recibido_acumulado'] = grouped.groupby('id_credito')['recibido'].cumsum()
+    grouped['cuotas_pendientes'] = (grouped['pagos_esperados'] - grouped['recibido_acumulado'].fillna(0)).astype(int)
+    grouped['mora'] = 'Mora '+grouped['cuotas_pendientes'].astype(str)
+    grouped['mora'] = grouped['mora'].where(grouped['estado_pago']=='Impago','Al día')
+    grouped['mora'] = grouped['mora'].where(grouped['estado_pago']!='Pagado','Pagado')
+
+    data = grouped.merge(mora[['id_credito','fecha_solicitud','nombre_empresa','nombre_sucursal','vendedor']], how='left', on='id_credito')
 
     return data

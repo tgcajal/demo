@@ -1,25 +1,27 @@
 import streamlit as st 
 import pandas as pd 
 import numpy as np
-from transform import index_chain_transform
+from transform import index_chain_transform, prep
 
-data = index_chain_transform('mora.csv','cashflow.csv')
+data = index_chain_transform('/Users/tgcajal/demo/mora.csv','/Users/tgcajal/demo/cashflow.csv')
 
 vendedores = data.groupby(level='vendedor').sum().reset_index()['vendedor']
 ventas = [list(data.loc[value]['id_credito']) for value in vendedores]
 tasa_impago = [list(data.loc[value]['tasa_impago']) for value in vendedores]
 
+#data = prep('/Users/tgcajal/demo/mora.csv','/Users/tgcajal/demo/cashflow.csv')
 
 data_impagos = {'Vendedor':list(vendedores),
                 'Ventas Semanales': ventas,
+                'Ventas Acumuladas':np.array(ventas).cumsum(),
                 'Tasa Impago': tasa_impago}
 
 column_configuration = {
     "Vendedor": st.column_config.TextColumn(
         "Vendedor", help="Vendedor", max_chars=100, width="medium"
     ),
-    "Tasa Impago": st.column_config.LineChartColumn(
-        "Tasa Impago (Semanal)",
+    "Ventas Acumuladas": st.column_config.LineChartColumn(
+        "Ventas Acumuladas (Semana)",
         help="Tasa de impago por cosecha semanal.",
         width="large",
         y_min=0,
@@ -48,6 +50,7 @@ with select:
         selection_mode="multi-row",
     )
     people = event.selection.rows
+    data_impagos = pd.DataFrame(data_impagos)
     filtered_df = data_impagos.iloc[people]
     st.dataframe(
         filtered_df,
@@ -63,7 +66,7 @@ with compare:
 
     tasa_df = {}
     for person in people:
-        tasa_df[data_impagos.iloc[person]["Vendedor"]] = data_impagos.iloc[person]["tasa_impago"]
+        tasa_df[data_impagos.iloc[person]["Vendedor"]] = data_impagos.iloc[person]["Ventas Acumuladas"]
     tasa_df = pd.DataFrame(tasa_df)
 
     if len(people) > 0:
