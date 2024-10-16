@@ -13,19 +13,11 @@ tasa_impago = [list(data.loc[value]['tasa_impago']) for value in vendedores]
 
 data_impagos = {'Vendedor':list(vendedores),
                 'Ventas Semanales': ventas,
-                'Ventas Acumuladas':np.cumsum(ventas),
                 'Tasa Impago': tasa_impago}
 
 column_configuration = {
     "Vendedor": st.column_config.TextColumn(
         "Vendedor", help="Vendedor", max_chars=100, width="medium"
-    ),
-    "Ventas Acumuladas": st.column_config.LineChartColumn(
-        "Ventas Acumuladas (Semana)",
-        help="Tasa de impago por cosecha semanal.",
-        width="large",
-        y_min=0,
-        y_max=1,
     ),
     "Ventas Semanales": st.column_config.BarChartColumn(
         "Ventas (Semanales)",
@@ -64,15 +56,8 @@ with compare:
         ventas_df[data_impagos.iloc[person]["Vendedor"]] = data_impagos.iloc[person]["Ventas Semanales"]
     ventas_df = pd.DataFrame(ventas_df)
 
-    tasa_df = {}
-    for person in people:
-        tasa_df[data_impagos.iloc[person]["Vendedor"]] = data_impagos.iloc[person]["Ventas Acumuladas"]
-    tasa_df = pd.DataFrame(tasa_df)
-
     if len(people) > 0:
         st.header("Daily activity comparison")
         st.bar_chart(ventas_df)
-        st.header("Yearly activity comparison")
-        st.line_chart(tasa_df)
     else:
         st.markdown("No members selected.")
