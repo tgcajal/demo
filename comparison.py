@@ -3,7 +3,7 @@ import pandas as pd
 import numpy as np
 from transform import index_chain_transform, prep
 
-data = index_chain_transform('/Users/tgcajal/demo/mora.csv','/Users/tgcajal/demo/cashflow.csv')
+data = index_chain_transform('mora.csv','cashflow.csv')
 
 vendedores = data.groupby(level='vendedor').sum().reset_index()['vendedor']
 ventas = [list(data.loc[value]['id_credito']) for value in vendedores]
