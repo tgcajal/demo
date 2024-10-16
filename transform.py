@@ -29,7 +29,7 @@ def transform(mora_csv, cashflow_csv):
     df.rename(columns={'edad_D_x':'edad_actual_D',
                    'edad_D_y':'edad_D',
                    'saldo_total':'saldo_esperado'}, inplace=True)
-    df['semana'] = df['fecha_solicitud'].dt.week
+    df['semana'] = df['fecha_solicitud'].dt.isocalendar().week
     df['cosecha_semana'] = df['semana'].astype(str)
     df['saldo_real'] = df['saldo_esperado'] + df['monto_cuota']*df['cuotas_pendientes']
     df['pago'] = [1 if estado in ['Pagado Retraso','Pagado a Tiempo'] else 0 for estado in df['estado']]
@@ -65,7 +65,7 @@ def index_chain_transform(mora_csv,cashflow_csv):
                 #'saldo_total':'saldo_esperado'}, 
                 inplace=True)
 
-    merged['semana'] = merged['fecha_solicitud'].dt.week
+    merged['semana'] = merged['fecha_solicitud'].dt.isocalendar().week
     merged['cosecha_semana'] = merged['semana'].astype(str)
     merged['pago'] = [1 if estado in ['Pagado Retraso','Pagado a Tiempo'] else 0 for estado in merged['estado']]
     merged['Mora'] = merged['cuotas_pendientes'].map({0: 'Al día',
@@ -85,7 +85,7 @@ def index_chain_transform(mora_csv,cashflow_csv):
     ejemplo_ = ejemplo.reset_index()
     ejemplo_.drop_duplicates(subset=['Mora','vendedor','fecha_solicitud','id_credito','fecha_pago','monto_cuota'],keep='first',inplace=True)
     ejemplo_['fecha_solicitud'] = pd.to_datetime(ejemplo_['fecha_solicitud'])
-    ejemplo_['semana_cosecha'] = ejemplo_['fecha_solicitud'].dt.week
+    ejemplo_['semana_cosecha'] = ejemplo_['fecha_solicitud'].dt.isocalendar().week
     ejemplo_['deuda'] = ejemplo_['monto_cuota'] - ejemplo_['pagado']
 
     data = ejemplo_.groupby(['vendedor','semana_cosecha']).sum()
